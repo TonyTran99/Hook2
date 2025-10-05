@@ -1,0 +1,61 @@
+Tạo một trang web mang tên “Hook Generator – MISA Formula V1”.
+Giao diện hiện đại, sử dụng Tailwind CSS hoặc framework tương đương, bố cục chia 2 phần chính:
+
+------------------------------------------------------------
+🎯 PHẦN 1: NHẬP DỮ LIỆU
+------------------------------------------------------------
+Hiển thị form gồm 10 trường đầu vào:
+
+1. Dropdown chọn “Cảm xúc chủ đạo (Emotion)” với 6 giá trị:
+   Awe/Inspiration, Humor, Joy, Outrage, Shock, Empathy
+
+2. Textbox “Chủ thể (Subject)”  
+3. Textbox “Hành động (Action)”  
+4. Textbox “Mục tiêu / Kết quả (Objective)”  
+5. Textbox “Tương phản (Contrast)”  
+6. Textbox “Bằng chứng (Proof)”  
+7. Textbox “Thời gian (Time)”  
+
+8. Dropdown “Định dạng Hook (9 loại)” gồm:
+   Secret Reveal, Case Study, Comparison, Question, Education, List, Contrarian, Personal Experience, Problem
+
+9. Dropdown “Cấu trúc kể chuyện (7 loại)” gồm:
+   Breakdown, Newscaster, Case Study Explainer, Listical, Problem Solver, Tutorial, Personal Story
+
+10. Nút “✨ TẠO CÂU HOOK”
+
+------------------------------------------------------------
+⚡ PHẦN 2: KẾT QUẢ XUẤT RA
+------------------------------------------------------------
+- Khi người dùng nhấn nút, trang hiển thị một câu hook tự động sinh:
+  “👉 [Subject] [Action] [Objective] — [Contrast] ([Proof]) [Time].”
+
+- Bên dưới câu hook, hiển thị:
+   - Emotion đã chọn (biểu tượng cảm xúc tương ứng 🎭)
+   - Hook format (nhãn màu)  
+   - Story structure (nhãn phụ)  
+   - Gợi ý tone viết theo Emotion:
+     + Joy → “Viết tone vui tươi, tích cực, khích lệ”
+     + Shock → “Ngắn gọn, gây tò mò, mở đầu nghịch lý”
+     + Outrage → “Tone cảnh báo, dùng động từ mạnh”
+     + Awe → “Truyền cảm hứng, nhấn mạnh sự thay đổi”
+     + Humor → “Dí dỏm, tự nhiên, gần gũi”
+     + Empathy → “Mềm mại, chạm cảm xúc”
+
+------------------------------------------------------------
+🎨 THIẾT KẾ
+------------------------------------------------------------
+- Tông màu chính: vàng – xanh lá – đen xám (giống bảng màu HDPE)
+- Giao diện chia đôi màn hình: bên trái form nhập, bên phải preview hook
+- Nút “Copy hook” với hiệu ứng animation
+- Có thêm nút “Random Example” để gợi ý 1 hook mẫu từ danh sách có sẵn
+- Responsive đẹp trên cả desktop & mobile
+- Font: Inter hoặc Montserrat
+
+------------------------------------------------------------
+⚙️ TÍNH NĂNG NÂNG CAO (tùy chọn)
+------------------------------------------------------------
+- Cho phép xuất danh sách 10 hook ngẫu nhiên dựa trên emotion đã chọn
+- Lưu lịch sử các hook vừa tạo (localStorage)
+- Thêm nút “Xuất Excel” để tải file hook như mẫu “Hook_Generator_MISA_Formula_V1.xlsx”
+- API nội bộ sinh hook bằng công thức:
