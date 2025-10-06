@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trợ lý Sáng tạo Hook – MISA Formula V3</title>
+    <title>Trợ lý Sáng tạo Hook – MISA Formula V4</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #030712; /* a darker gray */
+            background-color: #030712;
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #111827; }
@@ -24,7 +24,6 @@
         .form-input:focus {
             outline: none; border-color: #facc15; box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.5);
         }
-        /* Custom slider styles */
         input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; background: transparent; }
         input[type=range]:focus { outline: none; }
         input[type=range]::-webkit-slider-runnable-track {
@@ -39,7 +38,6 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .history-item { border-left: 3px solid #4ade80; }
         .recommended { background-color: #2c5242 !important; color: #a7f3d0 !important; }
         .checklist-item input:checked + label svg { display: block; }
     </style>
@@ -50,8 +48,8 @@
         <!-- PHẦN 1: INPUT & IDEATION -->
         <div class="w-full lg:w-1/2 p-6 lg:p-10 lg:overflow-y-auto">
             <header class="mb-8">
-                <h1 class="text-3xl md:text-4xl font-black text-yellow-400 tracking-tight">Trợ lý Sáng tạo Hook V3</h1>
-                <p class="text-lg text-gray-400 mt-2">Nâng cấp với "Shock Value" & "4 Quy tắc Vàng"</p>
+                <h1 class="text-3xl md:text-4xl font-black text-yellow-400 tracking-tight">Trợ lý Sáng tạo Hook V4</h1>
+                <p class="text-lg text-gray-400 mt-2">Tập trung vào Cấu trúc & Ngữ nghĩa</p>
             </header>
 
             <form id="hook-form" class="space-y-6">
@@ -101,8 +99,8 @@
                         <input type="text" id="action" name="action" class="form-input w-full p-2 rounded-md" placeholder="VD: đã tạo ra một app">
                     </div>
                     <div>
-                        <label for="proof" class="block text-sm font-medium text-gray-300 mb-1">Minh chứng</label>
-                        <input type="text" id="proof" name="proof" class="form-input w-full p-2 rounded-md" placeholder="VD: đạt 1 triệu tải">
+                        <label for="proof" class="block text-sm font-medium text-gray-300 mb-1">Minh chứng (Số liệu)</label>
+                        <input type="text" id="proof" name="proof" class="form-input w-full p-2 rounded-md" placeholder="VD: 3 cách / 1 triệu tải">
                     </div>
                 </div>
 
@@ -125,14 +123,14 @@
                         <div>
                             <label for="hook-format" class="block text-sm font-medium text-gray-300 mb-1">Định dạng Hook (Gợi ý màu xanh)</label>
                             <select id="hook-format" name="hook-format" class="form-input w-full p-2 rounded-md">
-                                <option>Secret Reveal</option>
+                                <option>Personal Experience</option>
                                 <option>Case Study</option>
+                                <option>Secret Reveal</option>
                                 <option>Comparison</option>
                                 <option>Question</option>
                                 <option>Education</option>
                                 <option>List</option>
                                 <option>Contrarian</option>
-                                <option>Personal Experience</option>
                                 <option>Problem</option>
                             </select>
                         </div>
@@ -141,7 +139,7 @@
 
                 <div class="pt-4 flex flex-col sm:flex-row gap-4">
                     <button type="submit" class="w-full sm:w-auto flex-1 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-6 rounded-lg transition-transform duration-200 transform hover:scale-105 shadow-lg">
-                        ✨ Tạo Hook
+                        ✨ Viết Hook theo Công thức
                     </button>
                     <button type="button" id="random-example" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-transform duration-200 transform hover:scale-105 shadow-lg">
                         Xem Ví dụ
@@ -161,14 +159,9 @@
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <label class="font-bold text-yellow-400">Hook được tạo (Có thể chỉnh sửa)</label>
-                        <div class="flex gap-2">
-                             <button id="variations-hook" class="bg-gray-700 hover:bg-blue-600 text-gray-300 hover:text-white p-2 rounded-full transition-all duration-200" title="Tạo phiên bản khác">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 110 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" /></svg>
-                            </button>
-                            <button id="copy-hook" class="bg-gray-700 hover:bg-green-600 text-gray-300 hover:text-white p-2 rounded-full transition-all duration-200" title="Copy hook">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-                            </button>
-                        </div>
+                        <button id="copy-hook" class="bg-gray-700 hover:bg-green-600 text-gray-300 hover:text-white p-2 rounded-full transition-all duration-200" title="Copy hook">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        </button>
                     </div>
                     <textarea id="generated-hook" rows="3" class="form-input w-full p-4 rounded-lg text-lg text-yellow-300 leading-relaxed"></textarea>
                 </div>
@@ -213,13 +206,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // A LOT OF DOM ELEMENTS
             const form = document.getElementById('hook-form');
             const resultContainer = document.getElementById('result-container');
             const resultPlaceholder = document.getElementById('result-placeholder');
             const generatedHookTextarea = document.getElementById('generated-hook');
             const copyButton = document.getElementById('copy-hook');
-            const variationsButton = document.getElementById('variations-hook');
             const hookFormatSelect = document.getElementById('hook-format');
             const storyStructureSelect = document.getElementById('story-structure');
             const objectiveShockSlider = document.getElementById('objective-shock');
@@ -230,75 +221,60 @@
             const contrastShockFeedback = document.getElementById('contrast-shock-feedback');
             const randomButton = document.getElementById('random-example');
             
-            // Storing current inputs for variation generation
-            let currentInputs = null;
-
-            // DATA
-            const emotionData = { 'Awe': { emoji: '🤩', color: 'bg-purple-500' }, 'Humor': { emoji: '😂', color: 'bg-orange-500' }, 'Joy': { emoji: '😊', color: 'bg-yellow-400 text-gray-900' }, 'Outrage': { emoji: '😠', color: 'bg-red-600' }, 'Shock': { emoji: '🤯', color: 'bg-sky-500' }, 'Empathy': { emoji: '❤️', color: 'bg-pink-500' }};
             const structureHookMap = { 'Breakdown': ['Secret Reveal', 'Question', 'Comparison', 'Contrarian'], 'Newscaster': ['Secret Reveal', 'Question', 'Comparison', 'Contrarian', 'Problem'], 'Case Study Explainer': ['Case Study', 'Question', 'Comparison'], 'Listical': ['List', 'Problem'], 'Problem Solver': ['Problem', 'Question', 'Contrarian'], 'Tutorial': ['Case Study', 'Education', 'Question'], 'Personal Story': ['Personal Experience', 'Problem', 'Contrarian'] };
             const randomExamples = [ { emotion: 'Awe', subject: 'Một cô gái 22 tuổi', action: 'đã tự xây một ngôi nhà', objective: 'chỉ từ vật liệu tái chế', contrast: 'dù chưa từng học về xây dựng', proof: 'tiết kiệm 500 triệu', format: 'Personal Experience', structure: 'Personal Story', objectiveShock: 85, contrastShock: 90 }, { emotion: 'Shock', subject: 'Việc đọc sách mỗi ngày', action: 'không thực sự giúp bạn thông minh hơn', objective: 'nếu bạn không làm điều này', contrast: 'hầu hết mọi người đều lầm tưởng', proof: 'nghiên cứu từ Harvard', format: 'Contrarian', structure: 'Problem Solver', objectiveShock: 75, contrastShock: 80 }, { emotion: 'Humor', subject: 'Sếp của tôi', action: 'đã yêu cầu tôi làm slide', objective: 'đẹp như "bức tranh Mona Lisa"', contrast: 'nhưng chỉ cho 5 phút', proof: 'và đây là kết quả', format: 'Problem', structure: 'Breakdown', objectiveShock: 60, contrastShock: 70 }];
 
-            const join = (...args) => args.filter(Boolean).join(' ').trim();
+            const join = (...args) => args.filter(val => val && val.trim() !== '').join(' ').trim();
 
-            const getHookTemplates = (format, inputs) => {
-                const { subject, action, objective, contrast, proof } = inputs;
-                const templates = {
-                    'Question': [
-                        `Liệu có thật ${join(subject, action, objective)} ${join(contrast)}? Sự thật sẽ khiến bạn bất ngờ.`,
-                        `Tại sao ${join(subject, action)} lại ${objective} ${join(contrast)}? Câu trả lời không như bạn nghĩ.`,
-                        `Bạn có tin được ${join(subject, action)} lại ${objective} ${join(contrast)} không?`
-                    ],
-                    'Contrarian': [
-                        `Hầu hết mọi người đều sai lầm khi nghĩ rằng ${contrast}, nhưng sự thật là ${join(subject, action, objective)}.`,
-                        `Hãy quên ${contrast} đi. Đây mới là cách ${join(subject, action, objective)} thật sự.`,
-                        `Người ta nói ${contrast}, nhưng đây là sự thật phũ phàng: ${join(subject, action, objective)}.`
-                    ],
-                    'Secret Reveal': [
-                        `Đây là bí mật giúp ${join(subject, action, objective)} ${join(contrast)}.`,
-                        `Một bí mật mà ${subject} không muốn bạn biết về ${action}: ${objective}.`,
-                        `Phanh phui sự thật: ${subject} đã ${action} để ${objective} ${join(contrast)}.`
-                    ],
-                     'Problem': [
-                        `Nếu bạn đang gặp vấn đề với ${contrast}, thì đây là cách ${join(subject, action, objective)}.`,
-                        `Chấm dứt ngay ${contrast}. Bí quyết nằm ở việc ${action} để ${objective}.`
-                    ],
-                     'List': [
-                        `Đây là ${proof || '3'} lý do tại sao ${join(subject, action, objective)} ${join(contrast)}.`,
-                        `${proof || '3'} sai lầm chết người khi ${action} khiến bạn không thể ${objective}.`
-                    ],
-                     'Comparison': [
-                         `So sánh giữa ${subject} và ${contrast}, đây là lý do tại sao ${action} lại ${objective}.`,
-                         `${subject} vs ${contrast}: Đâu mới là lựa chọn đúng đắn để ${objective}?`
-                    ],
-                    'Default': [
-                        `👉 ${join(subject, action, objective)} — ${join(contrast, proof ? `(${proof})` : '')}.`,
-                        `${subject} đã ${action} để ${objective}, bất chấp ${contrast} (${proof}).`
-                    ]
-                };
-                return templates[format] || templates['Default'];
-            };
-            
-            // Main function to generate and display hook
-            const generateAndDisplayHook = (inputs, variation = false) => {
-                const templates = getHookTemplates(inputs.format, inputs);
+            /**
+             * NEW: The Linguistic Brain of V4
+             * This function uses a single, grammatically-sound template for each hook format.
+             * It ensures the output is always coherent and logically structured.
+             * The randomness of V3 is removed in favor of reliability.
+             */
+            const constructHook = (inputs) => {
+                const { subject, action, objective, contrast, proof, format } = inputs;
                 let finalHook = '';
 
-                if (variation && generatedHookTextarea.value) {
-                    const currentHookIndex = templates.indexOf(generatedHookTextarea.dataset.template);
-                    const nextIndex = (currentHookIndex + 1) % templates.length;
-                    finalHook = templates[nextIndex];
-                    generatedHookTextarea.dataset.template = finalHook;
-                } else {
-                     finalHook = templates[Math.floor(Math.random() * templates.length)];
-                     generatedHookTextarea.dataset.template = finalHook;
+                switch (format) {
+                    case 'Question':
+                        finalHook = `Làm thế nào mà ${subject} có thể ${action} để ${objective}, ${join('dù', contrast)}?`;
+                        break;
+                    case 'Contrarian':
+                        finalHook = `Nhiều người nghĩ rằng ${contrast}, nhưng sự thật là ${subject} lại ${action} để ${objective}.`;
+                        break;
+                    case 'Secret Reveal':
+                        finalHook = `Bí mật mà không ai nói cho bạn biết về ${subject} là cách họ đã ${action} để ${objective} ${join('dù', contrast)}.`;
+                        break;
+                    case 'Problem':
+                        finalHook = `Nếu bạn đang gặp khó khăn với "${contrast}", thì đây là cách ${subject} đã ${action} để ${objective}.`;
+                        break;
+                    case 'List':
+                        finalHook = `Đây là ${proof || '3'} lý do tại sao ${subject} lại ${action} để ${objective}, trái ngược với niềm tin rằng ${contrast}.`;
+                        break;
+                    case 'Comparison':
+                        finalHook = `Giữa "${subject}" và "${contrast}", tại sao ${subject} lại là lựa chọn tốt hơn để ${objective}?`;
+                        break;
+                    case 'Education':
+                        finalHook = `Đây là cách ${subject} ${action} để ${objective}, một quá trình ${join('dù', contrast)}.`;
+                        break;
+                    case 'Personal Experience':
+                    case 'Case Study':
+                    default:
+                        let mainPart = join(subject, action, objective);
+                        let secondaryPart = join(contrast, proof ? `(${proof})` : '');
+                        finalHook = `👉 ${mainPart}${secondaryPart ? ` — ${secondaryPart}` : ''}.`;
+                        break;
                 }
-
-                generatedHookTextarea.value = finalHook.replace(/\s{2,}/g, ' ').trim();
-
+                return finalHook.replace(/\s{2,}/g, ' ').trim();
+            };
+            
+            // Main function to display the generated hook
+            const displayHook = (hookText) => {
+                generatedHookTextarea.value = hookText;
                 resultPlaceholder.classList.add('hidden');
                 resultContainer.classList.remove('hidden');
                 resultContainer.classList.add('fade-in');
-                 // Reset checklist
                 document.querySelectorAll('.checklist-item input').forEach(cb => cb.checked = false);
             };
 
@@ -338,21 +314,16 @@
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const formData = new FormData(form);
-                currentInputs = {
+                const currentInputs = {
                     subject: formData.get('subject'), action: formData.get('action'),
                     objective: formData.get('objective'), contrast: formData.get('contrast'),
                     proof: formData.get('proof'), format: formData.get('hook-format'),
                     structure: formData.get('story-structure'),
                 };
-                generateAndDisplayHook(currentInputs);
+                const finalHook = constructHook(currentInputs);
+                displayHook(finalHook);
             });
             
-            variationsButton.addEventListener('click', () => {
-                if(currentInputs) {
-                    generateAndDisplayHook(currentInputs, true);
-                }
-            });
-
             copyButton.addEventListener('click', () => {
                 navigator.clipboard.writeText(generatedHookTextarea.value);
                 copyButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
@@ -364,8 +335,9 @@
             randomButton.addEventListener('click', () => {
                 const randomExample = randomExamples[Math.floor(Math.random() * randomExamples.length)];
                 populateForm(randomExample);
-                currentInputs = { subject: randomExample.subject, action: randomExample.action, objective: randomExample.objective, contrast: randomExample.contrast, proof: randomExample.proof, format: randomExample.format, structure: randomExample.structure };
-                generateAndDisplayHook(currentInputs);
+                const currentInputs = { subject: randomExample.subject, action: randomExample.action, objective: randomExample.objective, contrast: randomExample.contrast, proof: randomExample.proof, format: randomExample.format, structure: randomExample.structure };
+                const finalHook = constructHook(currentInputs);
+                displayHook(finalHook);
                 updateRecommendations();
             });
             
