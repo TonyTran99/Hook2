@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trợ lý Sáng tạo Hook – MISA Formula V2</title>
+    <title>Trợ lý Sáng tạo Hook – MISA Formula V3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,186 +11,201 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #030712; /* a darker gray */
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1f2937;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4b5563;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6b7280;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
         .form-input {
-            background-color: #1f2937;
-            border: 1px solid #374151;
-            color: #d1d5db;
+            background-color: #111827; border: 1px solid #374151; color: #d1d5db;
             transition: all 0.2s ease-in-out;
         }
         .form-input:focus {
-            outline: none;
-            border-color: #facc15;
-            box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.5);
+            outline: none; border-color: #facc15; box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.5);
         }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+        /* Custom slider styles */
+        input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; background: transparent; }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; cursor: pointer; background: #374151; border-radius: 5px;
         }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; height: 18px; width: 18px; border-radius: 50%;
+            background: #facc15; cursor: pointer; margin-top: -6px;
+        }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .history-item {
-            border-left: 3px solid #4ade80;
-        }
-        .recommended {
-            background-color: #2c5242 !important;
-            color: #a7f3d0 !important;
-        }
+        .history-item { border-left: 3px solid #4ade80; }
+        .recommended { background-color: #2c5242 !important; color: #a7f3d0 !important; }
+        .checklist-item input:checked + label svg { display: block; }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200 antialiased">
+<body class="text-gray-200 antialiased">
 
     <div class="min-h-screen flex flex-col lg:flex-row">
-        <!-- PHẦN 1: NHẬP DỮ LIỆU -->
+        <!-- PHẦN 1: INPUT & IDEATION -->
         <div class="w-full lg:w-1/2 p-6 lg:p-10 lg:overflow-y-auto">
             <header class="mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-yellow-400 tracking-tight">Trợ lý Sáng tạo Hook</h1>
-                <p class="text-lg text-gray-400 mt-2">MISA Formula V2</p>
-                <p class="text-sm text-gray-500 mt-1">Dựa trên Khung Hệ Thống 4 Bước để chuyển đổi ý tưởng.</p>
+                <h1 class="text-3xl md:text-4xl font-black text-yellow-400 tracking-tight">Trợ lý Sáng tạo Hook V3</h1>
+                <p class="text-lg text-gray-400 mt-2">Nâng cấp với "Shock Value" & "4 Quy tắc Vàng"</p>
             </header>
 
-            <form id="hook-form" class="space-y-5">
-                <!-- Dòng 1: Cảm xúc & Chủ thể -->
-                <div class="grid md:grid-cols-2 gap-5">
-                    <div>
-                        <label for="emotion" class="block text-sm font-medium text-gray-300 mb-1">1. Cảm xúc muốn truyền tải</label>
-                        <select id="emotion" name="emotion" class="form-input w-full p-2 rounded-md">
-                            <option value="Awe">Awe/Inspiration (Ngưỡng mộ)</option>
-                            <option value="Humor">Humor (Hài hước)</option>
-                            <option value="Joy">Joy (Vui vẻ)</option>
-                            <option value="Outrage">Outrage (Phẫn nộ)</option>
-                            <option value="Shock">Shock (Bất ngờ/Tò mò)</option>
-                            <option value="Empathy">Empathy (Đồng cảm)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="subject" class="block text-sm font-medium text-gray-300 mb-1">2. Chủ thể</label>
-                        <input type="text" id="subject" name="subject" class="form-input w-full p-2 rounded-md" placeholder="VD: Một lập trình viên">
-                    </div>
+            <form id="hook-form" class="space-y-6">
+                <!-- Step 0: Emotion -->
+                <div>
+                     <label for="emotion" class="block text-sm font-medium text-gray-300 mb-1">Cảm xúc chủ đạo</label>
+                     <select id="emotion" name="emotion" class="form-input w-full p-2 rounded-md">
+                         <option value="Awe">Awe/Inspiration (Ngưỡng mộ)</option>
+                         <option value="Humor">Humor (Hài hước)</option>
+                         <option value="Joy">Joy (Vui vẻ)</option>
+                         <option value="Outrage">Outrage (Phẫn nộ)</option>
+                         <option value="Shock">Shock (Bất ngờ/Tò mò)</option>
+                         <option value="Empathy">Empathy (Đồng cảm)</option>
+                     </select>
                 </div>
 
-                <!-- Dòng 2: Hành động & Mục tiêu -->
-                <div class="grid md:grid-cols-2 gap-5">
+                <!-- Step 1: Shock Value -->
+                <div class="space-y-6 bg-gray-900/50 p-4 rounded-lg border border-dashed border-gray-700">
+                    <h2 class="font-bold text-green-400">Bước 1: Tìm kiếm "Giá trị Gây sốc"</h2>
                     <div>
-                        <label for="action" class="block text-sm font-medium text-gray-300 mb-1">3. Hành động</label>
+                        <label for="objective" class="block text-sm font-medium text-gray-300 mb-1">Kết quả gây sốc (Objective)</label>
+                        <input type="text" id="objective" name="objective" class="form-input w-full p-2 rounded-md" placeholder="VD: giúp bạn học 100 từ vựng">
+                        <div class="flex items-center gap-2 mt-2">
+                            <input type="range" id="objective-shock" min="1" max="100" value="50" class="w-full">
+                            <span id="objective-shock-value" class="text-sm font-mono bg-gray-700 text-yellow-300 px-2 py-0.5 rounded">50</span>
+                        </div>
+                        <p id="objective-shock-feedback" class="text-xs text-gray-500 mt-1 h-4"></p>
+                    </div>
+                    <div>
+                        <label for="contrast" class="block text-sm font-medium text-gray-300 mb-1">Sự thật đối nghịch (Contrast)</label>
+                        <input type="text" id="contrast" name="contrast" class="form-input w-full p-2 rounded-md" placeholder="VD: dù không biết code">
+                        <div class="flex items-center gap-2 mt-2">
+                            <input type="range" id="contrast-shock" min="1" max="100" value="50" class="w-full">
+                            <span id="contrast-shock-value" class="text-sm font-mono bg-gray-700 text-yellow-300 px-2 py-0.5 rounded">50</span>
+                        </div>
+                         <p id="contrast-shock-feedback" class="text-xs text-gray-500 mt-1 h-4"></p>
+                    </div>
+                </div>
+                 <!-- Other components -->
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-300 mb-1">Chủ thể</label>
+                        <input type="text" id="subject" name="subject" class="form-input w-full p-2 rounded-md" placeholder="VD: Một lập trình viên">
+                    </div>
+                    <div>
+                        <label for="action" class="block text-sm font-medium text-gray-300 mb-1">Hành động</label>
                         <input type="text" id="action" name="action" class="form-input w-full p-2 rounded-md" placeholder="VD: đã tạo ra một app">
                     </div>
                     <div>
-                        <label for="objective" class="block text-sm font-medium text-gray-300 mb-1">4. Kết quả gây sốc</label>
-                        <input type="text" id="objective" name="objective" class="form-input w-full p-2 rounded-md" placeholder="VD: giúp bạn học 100 từ vựng">
-                    </div>
-                </div>
-                
-                <!-- Dòng 3: Tương phản, Bằng chứng, Thời gian -->
-                <div class="grid md:grid-cols-3 gap-5">
-                     <div>
-                        <label for="contrast" class="block text-sm font-medium text-gray-300 mb-1">5. Sự thật đối nghịch</label>
-                        <input type="text" id="contrast" name="contrast" class="form-input w-full p-2 rounded-md" placeholder="VD: dù không biết code">
-                    </div>
-                    <div>
-                        <label for="proof" class="block text-sm font-medium text-gray-300 mb-1">6. Minh chứng</label>
+                        <label for="proof" class="block text-sm font-medium text-gray-300 mb-1">Minh chứng</label>
                         <input type="text" id="proof" name="proof" class="form-input w-full p-2 rounded-md" placeholder="VD: đạt 1 triệu tải">
                     </div>
-                     <div>
-                        <label for="time" class="block text-sm font-medium text-gray-300 mb-1">7. Yếu tố thời gian</label>
-                        <input type="text" id="time" name="time" class="form-input w-full p-2 rounded-md" placeholder="VD: chỉ trong 1 tuần">
+                </div>
+
+                <!-- Step 2 & 3: Structure -->
+                 <div class="space-y-4">
+                    <h2 class="font-bold text-green-400">Bước 2 & 3: Lựa chọn Cấu trúc</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                         <div>
+                            <label for="story-structure" class="block text-sm font-medium text-gray-300 mb-1">Cấu trúc kể chuyện</label>
+                            <select id="story-structure" name="story-structure" class="form-input w-full p-2 rounded-md">
+                                <option>Breakdown</option>
+                                <option>Newscaster</option>
+                                <option>Case Study Explainer</option>
+                                <option>Listical</option>
+                                <option>Problem Solver</option>
+                                <option>Tutorial</option>
+                                <option>Personal Story</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="hook-format" class="block text-sm font-medium text-gray-300 mb-1">Định dạng Hook (Gợi ý màu xanh)</label>
+                            <select id="hook-format" name="hook-format" class="form-input w-full p-2 rounded-md">
+                                <option>Secret Reveal</option>
+                                <option>Case Study</option>
+                                <option>Comparison</option>
+                                <option>Question</option>
+                                <option>Education</option>
+                                <option>List</option>
+                                <option>Contrarian</option>
+                                <option>Personal Experience</option>
+                                <option>Problem</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Dòng 4: Cấu trúc & Định dạng -->
-                <div class="grid md:grid-cols-2 gap-5">
-                     <div>
-                        <label for="story-structure" class="block text-sm font-medium text-gray-300 mb-1">8. Chọn Cấu trúc kể chuyện</label>
-                        <select id="story-structure" name="story-structure" class="form-input w-full p-2 rounded-md">
-                            <option>Breakdown</option>
-                            <option>Newscaster</option>
-                            <option>Case Study Explainer</option>
-                            <option>Listical</option>
-                            <option>Problem Solver</option>
-                            <option>Tutorial</option>
-                            <option>Personal Story</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="hook-format" class="block text-sm font-medium text-gray-300 mb-1">9. Chọn Định dạng Hook</label>
-                        <select id="hook-format" name="hook-format" class="form-input w-full p-2 rounded-md">
-                            <option>Secret Reveal</option>
-                            <option>Case Study</option>
-                            <option>Comparison</option>
-                            <option>Question</option>
-                            <option>Education</option>
-                            <option>List</option>
-                            <option>Contrarian</option>
-                            <option>Personal Experience</option>
-                            <option>Problem</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Nút bấm -->
                 <div class="pt-4 flex flex-col sm:flex-row gap-4">
                     <button type="submit" class="w-full sm:w-auto flex-1 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-6 rounded-lg transition-transform duration-200 transform hover:scale-105 shadow-lg">
-                        ✨ Viết Hook Tự Động
+                        ✨ Tạo Hook
                     </button>
                     <button type="button" id="random-example" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-transform duration-200 transform hover:scale-105 shadow-lg">
                         Xem Ví dụ
                     </button>
                 </div>
             </form>
-            
-            <!-- Lịch sử -->
-            <div id="history-section" class="mt-12 hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-gray-300">Lịch sử</h2>
-                    <button id="clear-history" class="text-sm text-red-400 hover:text-red-500 transition">Xóa tất cả</button>
-                </div>
-                <div id="history-container" class="space-y-4 max-h-64 overflow-y-auto pr-2">
-                </div>
-            </div>
         </div>
 
-        <!-- PHẦN 2: KẾT QUẢ XUẤT RA -->
+        <!-- PHẦN 2: OUTPUT & REFINEMENT -->
         <div class="w-full lg:w-1/2 p-6 lg:p-10 bg-gray-950 flex items-center justify-center">
             <div id="result-placeholder" class="text-center text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                 <p class="mt-4 text-lg">Trợ lý đang chờ lệnh của bạn...</p>
-                <p class="text-sm">Hãy điền thông tin và để ma thuật bắt đầu.</p>
             </div>
             <div id="result-container" class="hidden w-full max-w-2xl space-y-6">
-                <div class="bg-gray-800 p-6 rounded-lg shadow-2xl border border-gray-700 relative">
-                    <p id="generated-hook" class="text-2xl md:text-3xl font-semibold leading-normal text-yellow-300"></p>
-                    <button id="copy-hook" class="absolute top-4 right-4 bg-gray-700 hover:bg-green-600 text-gray-300 hover:text-white p-2 rounded-full transition-all duration-200" title="Copy hook">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-                    </button>
+                <!-- Editable Hook -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="font-bold text-yellow-400">Hook được tạo (Có thể chỉnh sửa)</label>
+                        <div class="flex gap-2">
+                             <button id="variations-hook" class="bg-gray-700 hover:bg-blue-600 text-gray-300 hover:text-white p-2 rounded-full transition-all duration-200" title="Tạo phiên bản khác">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 110 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <button id="copy-hook" class="bg-gray-700 hover:bg-green-600 text-gray-300 hover:text-white p-2 rounded-full transition-all duration-200" title="Copy hook">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="generated-hook" rows="3" class="form-input w-full p-4 rounded-lg text-lg text-yellow-300 leading-relaxed"></textarea>
                 </div>
-                
-                <div class="flex flex-wrap items-center gap-3">
-                    <span id="result-emotion" class="text-sm font-medium px-3 py-1 rounded-full"></span>
-                    <span id="result-format" class="text-sm font-medium px-3 py-1 rounded-full"></span>
-                    <span id="result-structure" class="text-xs font-medium px-3 py-1 rounded-full bg-gray-700 text-gray-300"></span>
-                </div>
-                
-                <div class="bg-gray-800/50 p-5 rounded-lg border border-dashed border-gray-700 space-y-3">
-                    <h3 class="font-bold text-green-400">💡 Trợ lý Gợi ý</h3>
-                    <div id="formula-suggestion" class="text-gray-400 text-sm font-mono p-3 bg-gray-900 rounded"></div>
-                    <div id="tone-suggestion" class="text-gray-300 text-sm"></div>
-                    <div id="format-suggestion" class="text-gray-300 text-sm"></div>
-                    <div id="structure-suggestion" class="text-gray-300 text-sm"></div>
+
+                <!-- 4 Golden Rules Checklist -->
+                <div class="bg-gray-800/50 p-5 rounded-lg border border-dashed border-gray-700">
+                    <h3 class="font-bold text-green-400 mb-3">Bước 4: Tinh chỉnh với "4 Quy tắc Vàng"</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="checklist-item flex items-center">
+                            <input id="check-clarity" type="checkbox" class="hidden">
+                            <label for="check-clarity" class="flex items-center cursor-pointer">
+                                <span class="w-5 h-5 border-2 border-gray-500 rounded-sm mr-2 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-400 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                                </span>
+                                Hook có <span class="font-bold text-white mx-1">Rõ ràng</span> về nội dung video không?
+                            </label>
+                        </div>
+                        <div class="checklist-item flex items-center">
+                           <input id="check-curiosity" type="checkbox" class="hidden">
+                           <label for="check-curiosity" class="flex items-center cursor-pointer">
+                                <span class="w-5 h-5 border-2 border-gray-500 rounded-sm mr-2 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-400 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                                </span>
+                                Hook có khơi gợi sự <span class="font-bold text-white mx-1">Tò mò</span> không?
+                           </label>
+                        </div>
+                        <div class="checklist-item flex items-center">
+                            <input id="check-speed" type="checkbox" class="hidden">
+                            <label for="check-speed" class="flex items-center cursor-pointer">
+                                <span class="w-5 h-5 border-2 border-gray-500 rounded-sm mr-2 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-400 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                                </span>
+                                Hook có đi thẳng vào vấn đề (<span class="font-bold text-white mx-1">Tốc độ</span>), không rườm rà?
+                           </label>
+                        </div>
+                         <p class="text-xs text-gray-500 pt-2 pl-7">Lưu ý: <span class="font-bold">Sự thống nhất</span> (Alignment) giữa hình ảnh, tiêu đề và lời nói là yếu tố then chốt.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -198,279 +213,176 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // A LOT OF DOM ELEMENTS
             const form = document.getElementById('hook-form');
             const resultContainer = document.getElementById('result-container');
             const resultPlaceholder = document.getElementById('result-placeholder');
-            const generatedHook = document.getElementById('generated-hook');
+            const generatedHookTextarea = document.getElementById('generated-hook');
             const copyButton = document.getElementById('copy-hook');
-            const resultEmotion = document.getElementById('result-emotion');
-            const resultFormat = document.getElementById('result-format');
-            const resultStructure = document.getElementById('result-structure');
-            const toneSuggestion = document.getElementById('tone-suggestion');
-            const formatSuggestion = document.getElementById('format-suggestion');
-            const structureSuggestion = document.getElementById('structure-suggestion');
-            const formulaSuggestion = document.getElementById('formula-suggestion');
-            const randomButton = document.getElementById('random-example');
-            const historySection = document.getElementById('history-section');
-            const historyContainer = document.getElementById('history-container');
-            const clearHistoryBtn = document.getElementById('clear-history');
+            const variationsButton = document.getElementById('variations-hook');
             const hookFormatSelect = document.getElementById('hook-format');
             const storyStructureSelect = document.getElementById('story-structure');
+            const objectiveShockSlider = document.getElementById('objective-shock');
+            const objectiveShockValue = document.getElementById('objective-shock-value');
+            const objectiveShockFeedback = document.getElementById('objective-shock-feedback');
+            const contrastShockSlider = document.getElementById('contrast-shock');
+            const contrastShockValue = document.getElementById('contrast-shock-value');
+            const contrastShockFeedback = document.getElementById('contrast-shock-feedback');
+            const randomButton = document.getElementById('random-example');
+            
+            // Storing current inputs for variation generation
+            let currentInputs = null;
 
-            const emotionData = {
-                'Awe': { emoji: '🤩', tone: 'Truyền cảm hứng, nhấn mạnh sự thay đổi, sử dụng từ ngữ vĩ đại.', color: 'bg-purple-500 text-white' },
-                'Humor': { emoji: '😂', tone: 'Dí dỏm, tự nhiên, gần gũi, có thể dùng lối nói lóng hoặc so sánh bất ngờ.', color: 'bg-orange-500 text-white' },
-                'Joy': { emoji: '😊', tone: 'Viết tone vui tươi, tích cực, khích lệ, tập trung vào lợi ích và niềm vui.', color: 'bg-yellow-400 text-gray-900' },
-                'Outrage': { emoji: '😠', tone: 'Tone cảnh báo, dùng động từ mạnh, chỉ ra sự bất công hoặc vấn đề cấp bách.', color: 'bg-red-600 text-white' },
-                'Shock': { emoji: '🤯', tone: 'Ngắn gọn, gây tò mò, mở đầu bằng một sự thật nghịch lý hoặc gây sốc.', color: 'bg-sky-500 text-white' },
-                'Empathy': { emoji: '❤️', tone: 'Mềm mại, chạm đến cảm xúc, thể hiện sự thấu hiểu và chia sẻ.', color: 'bg-pink-500 text-white' }
-            };
+            // DATA
+            const emotionData = { 'Awe': { emoji: '🤩', color: 'bg-purple-500' }, 'Humor': { emoji: '😂', color: 'bg-orange-500' }, 'Joy': { emoji: '😊', color: 'bg-yellow-400 text-gray-900' }, 'Outrage': { emoji: '😠', color: 'bg-red-600' }, 'Shock': { emoji: '🤯', color: 'bg-sky-500' }, 'Empathy': { emoji: '❤️', color: 'bg-pink-500' }};
+            const structureHookMap = { 'Breakdown': ['Secret Reveal', 'Question', 'Comparison', 'Contrarian'], 'Newscaster': ['Secret Reveal', 'Question', 'Comparison', 'Contrarian', 'Problem'], 'Case Study Explainer': ['Case Study', 'Question', 'Comparison'], 'Listical': ['List', 'Problem'], 'Problem Solver': ['Problem', 'Question', 'Contrarian'], 'Tutorial': ['Case Study', 'Education', 'Question'], 'Personal Story': ['Personal Experience', 'Problem', 'Contrarian'] };
+            const randomExamples = [ { emotion: 'Awe', subject: 'Một cô gái 22 tuổi', action: 'đã tự xây một ngôi nhà', objective: 'chỉ từ vật liệu tái chế', contrast: 'dù chưa từng học về xây dựng', proof: 'tiết kiệm 500 triệu', format: 'Personal Experience', structure: 'Personal Story', objectiveShock: 85, contrastShock: 90 }, { emotion: 'Shock', subject: 'Việc đọc sách mỗi ngày', action: 'không thực sự giúp bạn thông minh hơn', objective: 'nếu bạn không làm điều này', contrast: 'hầu hết mọi người đều lầm tưởng', proof: 'nghiên cứu từ Harvard', format: 'Contrarian', structure: 'Problem Solver', objectiveShock: 75, contrastShock: 80 }, { emotion: 'Humor', subject: 'Sếp của tôi', action: 'đã yêu cầu tôi làm slide', objective: 'đẹp như "bức tranh Mona Lisa"', contrast: 'nhưng chỉ cho 5 phút', proof: 'và đây là kết quả', format: 'Problem', structure: 'Breakdown', objectiveShock: 60, contrastShock: 70 }];
 
-            const formatData = {
-                'Secret Reveal': 'Bắt đầu bằng cách úp mở một bí mật hoặc thông tin ít người biết để khơi gợi sự tò mò ngay lập tức.',
-                'Case Study': 'Tập trung vào một ví dụ cụ thể, kể lại quá trình "trước và sau" để chứng minh hiệu quả.',
-                'Comparison': 'So sánh hai thứ (cũ vs mới, của bạn vs đối thủ) để làm nổi bật ưu điểm vượt trội.',
-                'Question': 'Đặt một câu hỏi trực diện, đánh vào "nỗi đau" hoặc thắc mắc mà khán giả đang tìm câu trả lời.',
-                'Education': 'Hướng đến việc chia sẻ kiến thức hữu ích, ví dụ: "Bạn có biết..." hoặc "Đây là cách X làm việc...".',
-                'List': 'Sử dụng con số cụ thể (VD: "3 cách...", "5 sai lầm...") để tạo cấu trúc rõ ràng và dễ theo dõi.',
-                'Contrarian': 'Đưa ra một quan điểm trái ngược với số đông để gây chú ý, phá vỡ niềm tin cũ.',
-                'Personal Experience': 'Kể lại câu chuyện của chính bạn một cách chân thực để tạo sự gần gũi và đáng tin cậy.',
-                'Problem': 'Nêu bật một "nỗi đau" hoặc vấn đề mà đối tượng mục tiêu đang đối mặt để họ thấy mình trong đó.'
-            };
+            const join = (...args) => args.filter(Boolean).join(' ').trim();
 
-            const structureData = {
-                'Breakdown': 'Phân tích một chủ đề phức tạp thành các phần nhỏ, dễ hiểu, giúp khán giả nắm bắt nhanh chóng.',
-                'Newscaster': 'Trình bày thông tin một cách khách quan, ngắn gọn, đi thẳng vào vấn đề như một bản tin thời sự.',
-                'Case Study Explainer': 'Đi sâu giải thích một trường hợp thành công/thất bại, phân tích nguyên nhân và rút ra bài học.',
-                'Listical': 'Liệt kê các điểm theo danh sách, mỗi điểm là một phần nội dung, giúp người xem dễ tiêu hóa thông tin.',
-                'Problem Solver': 'Trình bày theo cấu trúc: Đặt vấn đề -> Phân tích nguyên nhân -> Đưa ra giải pháp cụ thể.',
-                'Tutorial': 'Hướng dẫn từng bước chi tiết (step-by-step) để người xem có thể làm theo và đạt được kết quả.',
-                'Personal Story': 'Kể chuyện theo trình tự thời gian, có mở đầu, cao trào và kết thúc, tạo sự kết nối cảm xúc.'
+            const getHookTemplates = (format, inputs) => {
+                const { subject, action, objective, contrast, proof } = inputs;
+                const templates = {
+                    'Question': [
+                        `Liệu có thật ${join(subject, action, objective)} ${join(contrast)}? Sự thật sẽ khiến bạn bất ngờ.`,
+                        `Tại sao ${join(subject, action)} lại ${objective} ${join(contrast)}? Câu trả lời không như bạn nghĩ.`,
+                        `Bạn có tin được ${join(subject, action)} lại ${objective} ${join(contrast)} không?`
+                    ],
+                    'Contrarian': [
+                        `Hầu hết mọi người đều sai lầm khi nghĩ rằng ${contrast}, nhưng sự thật là ${join(subject, action, objective)}.`,
+                        `Hãy quên ${contrast} đi. Đây mới là cách ${join(subject, action, objective)} thật sự.`,
+                        `Người ta nói ${contrast}, nhưng đây là sự thật phũ phàng: ${join(subject, action, objective)}.`
+                    ],
+                    'Secret Reveal': [
+                        `Đây là bí mật giúp ${join(subject, action, objective)} ${join(contrast)}.`,
+                        `Một bí mật mà ${subject} không muốn bạn biết về ${action}: ${objective}.`,
+                        `Phanh phui sự thật: ${subject} đã ${action} để ${objective} ${join(contrast)}.`
+                    ],
+                     'Problem': [
+                        `Nếu bạn đang gặp vấn đề với ${contrast}, thì đây là cách ${join(subject, action, objective)}.`,
+                        `Chấm dứt ngay ${contrast}. Bí quyết nằm ở việc ${action} để ${objective}.`
+                    ],
+                     'List': [
+                        `Đây là ${proof || '3'} lý do tại sao ${join(subject, action, objective)} ${join(contrast)}.`,
+                        `${proof || '3'} sai lầm chết người khi ${action} khiến bạn không thể ${objective}.`
+                    ],
+                     'Comparison': [
+                         `So sánh giữa ${subject} và ${contrast}, đây là lý do tại sao ${action} lại ${objective}.`,
+                         `${subject} vs ${contrast}: Đâu mới là lựa chọn đúng đắn để ${objective}?`
+                    ],
+                    'Default': [
+                        `👉 ${join(subject, action, objective)} — ${join(contrast, proof ? `(${proof})` : '')}.`,
+                        `${subject} đã ${action} để ${objective}, bất chấp ${contrast} (${proof}).`
+                    ]
+                };
+                return templates[format] || templates['Default'];
             };
             
-            const structureHookMap = {
-                'Breakdown': ['Secret Reveal', 'Question', 'Comparison', 'Contrarian'],
-                'Newscaster': ['Secret Reveal', 'Question', 'Comparison', 'Contrarian', 'Problem'],
-                'Case Study Explainer': ['Case Study', 'Question', 'Comparison'],
-                'Listical': ['List', 'Problem'],
-                'Problem Solver': ['Problem', 'Question', 'Contrarian'],
-                'Tutorial': ['Case Study', 'Education', 'Question'], // Added based on context
-                'Personal Story': ['Personal Experience', 'Problem', 'Contrarian']
-            };
-
-            const randomExamples = [
-                // --- Personal Experience ---
-                { emotion: 'Awe', subject: 'Một cô gái 22 tuổi', action: 'đã tự xây một ngôi nhà', objective: 'chỉ từ vật liệu tái chế', contrast: 'dù chưa từng học về xây dựng', proof: 'tiết kiệm 500 triệu', time: 'trong 6 tháng', format: 'Personal Experience', structure: 'Personal Story' },
-                { emotion: 'Empathy', subject: 'Tôi', action: 'đã từng thất bại 10 lần khởi nghiệp', objective: 'và mất tất cả', contrast: 'trước khi xây dựng được công ty triệu đô', proof: 'từ 2 bàn tay trắng', time: 'ở tuổi 30', format: 'Personal Experience', structure: 'Personal Story' },
-                { emotion: 'Joy', subject: 'Chuyến đi bộ xuyên Việt', action: 'đã thay đổi hoàn toàn cuộc đời tôi', objective: 'giúp tôi tìm thấy mục đích sống', contrast: 'chỉ với 1 triệu đồng trong túi', proof: 'sau 90 ngày rong ruổi', time: '', format: 'Personal Experience', structure: 'Personal Story' },
-
-                // --- Contrarian ---
-                { emotion: 'Shock', subject: 'Việc đọc sách mỗi ngày', action: 'không thực sự giúp bạn thông minh hơn', objective: 'nếu bạn không làm điều này', contrast: 'hầu hết mọi người đều lầm tưởng', proof: 'nghiên cứu từ Harvard', time: '', format: 'Contrarian', structure: 'Problem Solver' },
-                { emotion: 'Outrage', subject: 'Uống 8 ly nước mỗi ngày', action: 'thực chất là một lời nói dối', objective: 'được các tập đoàn nước đóng chai bịa ra', contrast: 'và chúng ta đã tin sái cổ', proof: 'sự thật được phanh phui', time: 'suốt 50 năm qua', format: 'Contrarian', structure: 'Newscaster' },
-                { emotion: 'Awe', subject: 'Từ bỏ cà phê', action: 'lại là cách tốt nhất', objective: 'để có năng lượng cả ngày', contrast: 'đi ngược lại mọi lời khuyên bạn từng nghe', proof: 'tăng 200% hiệu suất', time: 'sau 1 tuần', format: 'Contrarian', structure: 'Breakdown' },
-
-                // --- Problem ---
-                { emotion: 'Humor', subject: 'Sếp của tôi', action: 'đã yêu cầu tôi làm slide', objective: 'đẹp như "bức tranh Mona Lisa"', contrast: 'nhưng chỉ cho 5 phút', proof: 'và đây là kết quả', time: 'ngay lập tức', format: 'Problem', structure: 'Breakdown' },
-                { emotion: 'Empathy', subject: 'Nếu bạn luôn cảm thấy mệt mỏi', action: 'dù đã ngủ đủ 8 tiếng', objective: 'thì đây là nguyên nhân thực sự', contrast: 'không phải do lười biếng', proof: '90% người mắc phải', time: 'mỗi sáng', format: 'Problem', structure: 'Problem Solver' },
-                { emotion: 'Shock', subject: 'Tài khoản quảng cáo của bạn', action: 'liên tục bị vô hiệu hóa', objective: 'mà không rõ lý do?', contrast: 'Đây là sai lầm chết người', proof: 'mà Facebook không nói cho bạn biết', time: '', format: 'Problem', structure: 'Newscaster' },
-
-                // --- Secret Reveal ---
-                { emotion: 'Shock', subject: 'Các hãng hàng không', action: 'có một bí mật', objective: 'về những chiếc ghế "tốt nhất"', contrast: 'mà họ không bao giờ muốn bạn biết', proof: 'tiết kiệm tới 50% chi phí', time: 'trong mỗi chuyến bay', format: 'Secret Reveal', structure: 'Breakdown' },
-                { emotion: 'Awe', subject: 'Bí mật đằng sau những video triệu view', action: 'không nằm ở kịch bản hay góc quay', objective: 'mà ở một yếu tố tâm lý ít ai ngờ', contrast: 'các Tiktoker hàng đầu đang áp dụng', proof: '', time: '', format: 'Secret Reveal', structure: 'Newscaster' },
-                
-                // --- Question ---
-                { emotion: 'Shock', subject: 'Liệu có thật', action: 'chúng ta chỉ đang dùng 10% bộ não?', objective: 'Sự thật sẽ khiến bạn ngã ngửa', contrast: 'một niềm tin phổ biến', proof: '', time: '', format: 'Question', structure: 'Breakdown' },
-                { emotion: 'Outrage', subject: 'Tại sao các khóa học làm giàu', action: 'chỉ giúp chính người bán', objective: 'trở nên giàu có?', contrast: 'mà không phải học viên', proof: 'một sự thật phũ phàng', time: '', format: 'Question', structure: 'Problem Solver' },
-
-                // --- Case Study ---
-                { emotion: 'Awe', subject: 'Case study: Kênh Youtube này', action: 'đã đạt 100.000 subscribers', objective: 'chỉ bằng video Shorts', contrast: 'mà không cần lộ mặt', proof: 'doanh thu 5000$/tháng', time: 'trong 3 tháng', format: 'Case Study', structure: 'Case Study Explainer' },
-                { emotion: 'Joy', subject: 'Phương pháp học Pomodoro', action: 'đã giúp một sinh viên', objective: 'tăng điểm GPA từ 2.5 lên 3.8', contrast: 'dù thời gian học ít hơn', proof: 'case study thực tế', time: 'chỉ sau 1 học kỳ', format: 'Case Study', structure: 'Tutorial' },
-                
-                // --- Comparison ---
-                { emotion: 'Shock', subject: 'So sánh giữa việc đọc sách và xem video tóm tắt', action: 'một bên giúp bạn nhớ lâu hơn 70%', objective: 'bên còn lại gần như vô dụng', contrast: 'kết quả bất ngờ', proof: 'nghiên cứu thần kinh học', time: '', format: 'Comparison', structure: 'Breakdown' },
-                { emotion: 'Joy', subject: 'Gửi tiết kiệm ngân hàng vs Đầu tư chứng chỉ quỹ', action: 'đâu là lựa chọn tối ưu', objective: 'cho người mới bắt đầu?', contrast: 'với số vốn 1 triệu đồng', proof: 'phân tích từ chuyên gia', time: '', format: 'Comparison', structure: 'Case Study Explainer' },
-                
-                // --- List ---
-                { emotion: 'Outrage', subject: '3 sai lầm "chí mạng"', action: 'khiến bạn mãi nghèo', objective: 'dù làm việc rất chăm chỉ', contrast: 'người giàu không bao giờ mắc phải', proof: '', time: '', format: 'List', structure: 'Listical' },
-                { emotion: 'Joy', subject: '5 ứng dụng miễn phí', action: 'sẽ thay đổi hoàn toàn', objective: 'cách bạn quản lý công việc', contrast: 'mà bạn ước mình biết đến sớm hơn', proof: 'tăng 2X hiệu suất', time: '', format: 'List', structure: 'Listical' },
-
-                // --- Education ---
-                { emotion: 'Awe', subject: 'Đây là cách', action: 'một lỗ đen "nuốt chửng" một ngôi sao', objective: 'mô phỏng từ NASA', contrast: 'một cảnh tượng ngoạn mục', proof: '', time: '', format: 'Education', structure: 'Tutorial' },
-                { emotion: 'Shock', subject: 'Bạn có biết', action: 'mật ong không bao giờ hết hạn sử dụng?', objective: 'Các nhà khảo cổ đã tìm thấy hũ mật ong 3000 năm tuổi', contrast: 'và nó vẫn ăn được', proof: 'sự thật khó tin', time: '', format: 'Education', structure: 'Breakdown' },
-            ];
-            
-            const join = (...args) => args.filter(Boolean).join(' ');
-
-            const generateAndDisplayHook = (inputs) => {
-                const { subject, action, objective, contrast, proof, time, format } = inputs;
+            // Main function to generate and display hook
+            const generateAndDisplayHook = (inputs, variation = false) => {
+                const templates = getHookTemplates(inputs.format, inputs);
                 let finalHook = '';
-                let formulaText = '';
 
-                // Dynamic Hook Generation based on selected format
-                switch (format) {
-                    case 'Question':
-                        finalHook = `Liệu có thật ${join(subject, action, objective)} ${join(contrast, time)}?`;
-                        formulaText = `Liệu có thật [chủ thể] [hành động] [kết quả] [đối nghịch] [thời gian]?`;
-                        break;
-                    case 'Contrarian':
-                        finalHook = `Hầu hết mọi người đều sai lầm khi nghĩ rằng ${contrast}, nhưng sự thật là ${join(subject, action, objective)} ${join(time)}.`;
-                         formulaText = `Hầu hết mọi người nghĩ [đối nghịch], nhưng sự thật là [chủ thể] [hành động] [kết quả] [thời gian].`;
-                        break;
-                    case 'Secret Reveal':
-                        finalHook = `Đây là bí mật giúp ${join(subject, action, objective)} ${join(contrast)} ${join(time)}.`;
-                        formulaText = `Đây là bí mật giúp [chủ thể] [hành động] [kết quả] [đối nghịch] [thời gian].`;
-                        break;
-                    case 'Problem':
-                        finalHook = `Nếu bạn đang gặp vấn đề với ${contrast}, thì đây là cách ${join(subject, action, objective)}.`;
-                        formulaText = `Nếu bạn gặp vấn đề với [đối nghịch], đây là cách [chủ thể] [hành động] [kết quả].`;
-                        break;
-                    case 'List':
-                        finalHook = `Đây là ${proof || '3'} lý do tại sao ${join(subject, action, objective)} ${join(contrast)}.`;
-                        formulaText = `Đây là [minh chứng] lý do tại sao [chủ thể] [hành động] [kết quả] [đối nghịch].`;
-                        break;
-                    case 'Comparison':
-                         finalHook = `So sánh giữa ${subject} và ${contrast}, đây là lý do tại sao ${action} lại ${objective}.`;
-                         formulaText = `So sánh [chủ thể] và [đối nghịch], đây là lý do [hành động] lại [kết quả].`;
-                         break;
-                    case 'Case Study':
-                    case 'Personal Experience':
-                    default:
-                        let mainPart = join('👉', subject, action, objective);
-                        let postParts = join(contrast, proof ? `(${proof})` : '', time);
-                        finalHook = postParts ? `${mainPart} — ${postParts}.` : `${mainPart}.`;
-                        formulaText = `👉 [chủ thể] [hành động] [kết quả] — [đối nghịch] ([minh chứng]) [thời gian].`;
+                if (variation && generatedHookTextarea.value) {
+                    const currentHookIndex = templates.indexOf(generatedHookTextarea.dataset.template);
+                    const nextIndex = (currentHookIndex + 1) % templates.length;
+                    finalHook = templates[nextIndex];
+                    generatedHookTextarea.dataset.template = finalHook;
+                } else {
+                     finalHook = templates[Math.floor(Math.random() * templates.length)];
+                     generatedHookTextarea.dataset.template = finalHook;
                 }
 
-                generatedHook.textContent = finalHook.replace(/\s{2,}/g, ' ').trim();
-
-                const emotionInfo = emotionData[inputs.emotion];
-                if (emotionInfo) {
-                    resultEmotion.textContent = `${emotionInfo.emoji} ${inputs.emotion}`;
-                    resultEmotion.className = `text-sm font-medium px-3 py-1 rounded-full ${emotionInfo.color}`;
-                    toneSuggestion.innerHTML = `<span class='font-semibold text-gray-400'>Về cảm xúc:</span> ${emotionInfo.tone}`;
-                }
-
-                resultFormat.textContent = inputs.format;
-                resultFormat.className = 'text-sm font-medium px-3 py-1 rounded-full bg-green-600 text-white';
-                resultStructure.textContent = inputs.structure;
-                
-                formulaSuggestion.textContent = `Công thức: ${formulaText}`;
-                formatSuggestion.innerHTML = `<span class='font-semibold text-gray-400'>Về định dạng:</span> ${formatData[inputs.format]}`;
-                structureSuggestion.innerHTML = `<span class='font-semibold text-gray-400'>Về cấu trúc:</span> ${structureData[inputs.structure]}`;
+                generatedHookTextarea.value = finalHook.replace(/\s{2,}/g, ' ').trim();
 
                 resultPlaceholder.classList.add('hidden');
                 resultContainer.classList.remove('hidden');
                 resultContainer.classList.add('fade-in');
+                 // Reset checklist
+                document.querySelectorAll('.checklist-item input').forEach(cb => cb.checked = false);
+            };
 
-                return generatedHook.textContent;
+            const updateShockFeedback = (slider, feedbackEl) => {
+                const value = parseInt(slider.value);
+                let feedback = '';
+                if (value >= 90) feedback = '🤯 Xuất sắc! Chi tiết cực kỳ đắt giá.';
+                else if (value >= 75) feedback = '🔥 Rất tốt! Có khả năng gây bùng nổ.';
+                else if (value >= 50) feedback = '🤔 Khá ổn. Thử tìm góc nhìn bất ngờ hơn?';
+                else feedback = '🧐 Cần một yếu tố gây sốc mạnh hơn.';
+                feedbackEl.textContent = feedback;
             };
 
             const updateRecommendations = () => {
                 const selectedStructure = storyStructureSelect.value;
                 const recommendedHooks = structureHookMap[selectedStructure] || [];
-                
                 Array.from(hookFormatSelect.options).forEach(option => {
-                    if (recommendedHooks.includes(option.value)) {
-                        option.classList.add('recommended');
-                    } else {
-                        option.classList.remove('recommended');
-                    }
+                    option.classList.toggle('recommended', recommendedHooks.includes(option.value));
                 });
-            };
-
-            let history = JSON.parse(localStorage.getItem('hookHistory_v2')) || [];
-
-            const renderHistory = () => {
-                if (history.length > 0) {
-                    historySection.classList.remove('hidden');
-                    historyContainer.innerHTML = '';
-                    history.slice().reverse().forEach(item => {
-                        const historyItem = document.createElement('div');
-                        historyItem.className = 'history-item bg-gray-800 p-3 rounded-md cursor-pointer hover:bg-gray-700 transition';
-                        historyItem.innerHTML = `<p class="text-sm text-gray-300 truncate">${item.hook}</p><p class="text-xs text-gray-500">${item.emotion} / ${item.format}</p>`;
-                        historyItem.addEventListener('click', () => {
-                            populateForm(item.inputs);
-                            generateAndDisplayHook(item.inputs);
-                            updateRecommendations();
-                        });
-                        historyContainer.appendChild(historyItem);
-                    });
-                } else {
-                    historySection.classList.add('hidden');
-                }
-            };
-            
-            const saveToHistory = (hook, inputs) => {
-                const historyItem = { hook, inputs, emotion: inputs.emotion, format: inputs.format, timestamp: new Date().getTime() };
-                history.push(historyItem);
-                if (history.length > 20) history.shift();
-                localStorage.setItem('hookHistory_v2', JSON.stringify(history));
-                renderHistory();
             };
             
             const populateForm = (data) => {
                 Object.keys(data).forEach(key => {
-                    if (form.elements[key]) {
-                        form.elements[key].value = data[key];
-                    }
+                    if (form.elements[key]) form.elements[key].value = data[key];
                 });
                 form.elements['hook-format'].value = data.format;
                 form.elements['story-structure'].value = data.structure;
+                objectiveShockSlider.value = data.objectiveShock || 50;
+                contrastShockSlider.value = data.contrastShock || 50;
+                objectiveShockValue.textContent = objectiveShockSlider.value;
+                contrastShockValue.textContent = contrastShockSlider.value;
+                updateShockFeedback(objectiveShockSlider, objectiveShockFeedback);
+                updateShockFeedback(contrastShockSlider, contrastShockFeedback);
             };
 
+            // EVENT LISTENERS
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const formData = new FormData(form);
-                const inputs = {
-                    emotion: formData.get('emotion'),
-                    subject: formData.get('subject'),
-                    action: formData.get('action'),
-                    objective: formData.get('objective'),
-                    contrast: formData.get('contrast'),
-                    proof: formData.get('proof'),
-                    time: formData.get('time'),
-                    format: formData.get('hook-format'),
+                currentInputs = {
+                    subject: formData.get('subject'), action: formData.get('action'),
+                    objective: formData.get('objective'), contrast: formData.get('contrast'),
+                    proof: formData.get('proof'), format: formData.get('hook-format'),
                     structure: formData.get('story-structure'),
                 };
-                const finalHook = generateAndDisplayHook(inputs);
-                saveToHistory(finalHook, inputs);
+                generateAndDisplayHook(currentInputs);
+            });
+            
+            variationsButton.addEventListener('click', () => {
+                if(currentInputs) {
+                    generateAndDisplayHook(currentInputs, true);
+                }
             });
 
             copyButton.addEventListener('click', () => {
-                navigator.clipboard.writeText(generatedHook.textContent).then(() => {
-                    copyButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
-                    copyButton.title = "Đã sao chép!";
-                    setTimeout(() => {
-                        copyButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>`;
-                        copyButton.title = "Copy hook";
-                    }, 2000);
-                });
+                navigator.clipboard.writeText(generatedHookTextarea.value);
+                copyButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
+                setTimeout(() => {
+                    copyButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>`;
+                }, 2000);
             });
             
             randomButton.addEventListener('click', () => {
                 const randomExample = randomExamples[Math.floor(Math.random() * randomExamples.length)];
                 populateForm(randomExample);
-                const finalHook = generateAndDisplayHook(randomExample);
-                saveToHistory(finalHook, randomExample);
+                currentInputs = { subject: randomExample.subject, action: randomExample.action, objective: randomExample.objective, contrast: randomExample.contrast, proof: randomExample.proof, format: randomExample.format, structure: randomExample.structure };
+                generateAndDisplayHook(currentInputs);
                 updateRecommendations();
-            });
-
-            clearHistoryBtn.addEventListener('click', () => {
-                if (confirm('Bạn có chắc chắn muốn xóa toàn bộ lịch sử không?')) {
-                    history = [];
-                    localStorage.removeItem('hookHistory_v2');
-                    renderHistory();
-                }
             });
             
             storyStructureSelect.addEventListener('change', updateRecommendations);
+            objectiveShockSlider.addEventListener('input', () => {
+                objectiveShockValue.textContent = objectiveShockSlider.value;
+                updateShockFeedback(objectiveShockSlider, objectiveShockFeedback);
+            });
+            contrastShockSlider.addEventListener('input', () => {
+                contrastShockValue.textContent = contrastShockSlider.value;
+                updateShockFeedback(contrastShockSlider, contrastShockFeedback);
+            });
 
             // Initial calls
-            renderHistory();
             updateRecommendations();
         });
     </script>
 </body>
 </html>
-
 
