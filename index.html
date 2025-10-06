@@ -259,9 +259,44 @@
             };
 
             const randomExamples = [
+                // --- Personal Experience ---
                 { emotion: 'Awe', subject: 'Một cô gái 22 tuổi', action: 'đã tự xây một ngôi nhà', objective: 'chỉ từ vật liệu tái chế', contrast: 'dù chưa từng học về xây dựng', proof: 'tiết kiệm 500 triệu', time: 'trong 6 tháng', format: 'Personal Experience', structure: 'Personal Story' },
-                { emotion: 'Shock', subject: '99% người dùng', action: 'đang mắc sai lầm nghiêm trọng', objective: 'khi sạc điện thoại', contrast: 'mà không hề hay biết', proof: 'pin chai sau 3 tháng', time: 'mỗi ngày', format: 'Contrarian', structure: 'Problem Solver' },
-                { emotion: 'Humor', subject: 'Sếp của tôi', action: 'đã yêu cầu tôi làm slide', objective: 'đẹp như "bức tranh Mona Lisa"', contrast: 'nhưng chỉ cho 5 phút', proof: 'và đây là kết quả', time: 'ngay lập tức', format: 'Problem', structure: 'Breakdown' }
+                { emotion: 'Empathy', subject: 'Tôi', action: 'đã từng thất bại 10 lần khởi nghiệp', objective: 'và mất tất cả', contrast: 'trước khi xây dựng được công ty triệu đô', proof: 'từ 2 bàn tay trắng', time: 'ở tuổi 30', format: 'Personal Experience', structure: 'Personal Story' },
+                { emotion: 'Joy', subject: 'Chuyến đi bộ xuyên Việt', action: 'đã thay đổi hoàn toàn cuộc đời tôi', objective: 'giúp tôi tìm thấy mục đích sống', contrast: 'chỉ với 1 triệu đồng trong túi', proof: 'sau 90 ngày rong ruổi', time: '', format: 'Personal Experience', structure: 'Personal Story' },
+
+                // --- Contrarian ---
+                { emotion: 'Shock', subject: 'Việc đọc sách mỗi ngày', action: 'không thực sự giúp bạn thông minh hơn', objective: 'nếu bạn không làm điều này', contrast: 'hầu hết mọi người đều lầm tưởng', proof: 'nghiên cứu từ Harvard', time: '', format: 'Contrarian', structure: 'Problem Solver' },
+                { emotion: 'Outrage', subject: 'Uống 8 ly nước mỗi ngày', action: 'thực chất là một lời nói dối', objective: 'được các tập đoàn nước đóng chai bịa ra', contrast: 'và chúng ta đã tin sái cổ', proof: 'sự thật được phanh phui', time: 'suốt 50 năm qua', format: 'Contrarian', structure: 'Newscaster' },
+                { emotion: 'Awe', subject: 'Từ bỏ cà phê', action: 'lại là cách tốt nhất', objective: 'để có năng lượng cả ngày', contrast: 'đi ngược lại mọi lời khuyên bạn từng nghe', proof: 'tăng 200% hiệu suất', time: 'sau 1 tuần', format: 'Contrarian', structure: 'Breakdown' },
+
+                // --- Problem ---
+                { emotion: 'Humor', subject: 'Sếp của tôi', action: 'đã yêu cầu tôi làm slide', objective: 'đẹp như "bức tranh Mona Lisa"', contrast: 'nhưng chỉ cho 5 phút', proof: 'và đây là kết quả', time: 'ngay lập tức', format: 'Problem', structure: 'Breakdown' },
+                { emotion: 'Empathy', subject: 'Nếu bạn luôn cảm thấy mệt mỏi', action: 'dù đã ngủ đủ 8 tiếng', objective: 'thì đây là nguyên nhân thực sự', contrast: 'không phải do lười biếng', proof: '90% người mắc phải', time: 'mỗi sáng', format: 'Problem', structure: 'Problem Solver' },
+                { emotion: 'Shock', subject: 'Tài khoản quảng cáo của bạn', action: 'liên tục bị vô hiệu hóa', objective: 'mà không rõ lý do?', contrast: 'Đây là sai lầm chết người', proof: 'mà Facebook không nói cho bạn biết', time: '', format: 'Problem', structure: 'Newscaster' },
+
+                // --- Secret Reveal ---
+                { emotion: 'Shock', subject: 'Các hãng hàng không', action: 'có một bí mật', objective: 'về những chiếc ghế "tốt nhất"', contrast: 'mà họ không bao giờ muốn bạn biết', proof: 'tiết kiệm tới 50% chi phí', time: 'trong mỗi chuyến bay', format: 'Secret Reveal', structure: 'Breakdown' },
+                { emotion: 'Awe', subject: 'Bí mật đằng sau những video triệu view', action: 'không nằm ở kịch bản hay góc quay', objective: 'mà ở một yếu tố tâm lý ít ai ngờ', contrast: 'các Tiktoker hàng đầu đang áp dụng', proof: '', time: '', format: 'Secret Reveal', structure: 'Newscaster' },
+                
+                // --- Question ---
+                { emotion: 'Shock', subject: 'Liệu có thật', action: 'chúng ta chỉ đang dùng 10% bộ não?', objective: 'Sự thật sẽ khiến bạn ngã ngửa', contrast: 'một niềm tin phổ biến', proof: '', time: '', format: 'Question', structure: 'Breakdown' },
+                { emotion: 'Outrage', subject: 'Tại sao các khóa học làm giàu', action: 'chỉ giúp chính người bán', objective: 'trở nên giàu có?', contrast: 'mà không phải học viên', proof: 'một sự thật phũ phàng', time: '', format: 'Question', structure: 'Problem Solver' },
+
+                // --- Case Study ---
+                { emotion: 'Awe', subject: 'Case study: Kênh Youtube này', action: 'đã đạt 100.000 subscribers', objective: 'chỉ bằng video Shorts', contrast: 'mà không cần lộ mặt', proof: 'doanh thu 5000$/tháng', time: 'trong 3 tháng', format: 'Case Study', structure: 'Case Study Explainer' },
+                { emotion: 'Joy', subject: 'Phương pháp học Pomodoro', action: 'đã giúp một sinh viên', objective: 'tăng điểm GPA từ 2.5 lên 3.8', contrast: 'dù thời gian học ít hơn', proof: 'case study thực tế', time: 'chỉ sau 1 học kỳ', format: 'Case Study', structure: 'Tutorial' },
+                
+                // --- Comparison ---
+                { emotion: 'Shock', subject: 'So sánh giữa việc đọc sách và xem video tóm tắt', action: 'một bên giúp bạn nhớ lâu hơn 70%', objective: 'bên còn lại gần như vô dụng', contrast: 'kết quả bất ngờ', proof: 'nghiên cứu thần kinh học', time: '', format: 'Comparison', structure: 'Breakdown' },
+                { emotion: 'Joy', subject: 'Gửi tiết kiệm ngân hàng vs Đầu tư chứng chỉ quỹ', action: 'đâu là lựa chọn tối ưu', objective: 'cho người mới bắt đầu?', contrast: 'với số vốn 1 triệu đồng', proof: 'phân tích từ chuyên gia', time: '', format: 'Comparison', structure: 'Case Study Explainer' },
+                
+                // --- List ---
+                { emotion: 'Outrage', subject: '3 sai lầm "chí mạng"', action: 'khiến bạn mãi nghèo', objective: 'dù làm việc rất chăm chỉ', contrast: 'người giàu không bao giờ mắc phải', proof: '', time: '', format: 'List', structure: 'Listical' },
+                { emotion: 'Joy', subject: '5 ứng dụng miễn phí', action: 'sẽ thay đổi hoàn toàn', objective: 'cách bạn quản lý công việc', contrast: 'mà bạn ước mình biết đến sớm hơn', proof: 'tăng 2X hiệu suất', time: '', format: 'List', structure: 'Listical' },
+
+                // --- Education ---
+                { emotion: 'Awe', subject: 'Đây là cách', action: 'một lỗ đen "nuốt chửng" một ngôi sao', objective: 'mô phỏng từ NASA', contrast: 'một cảnh tượng ngoạn mục', proof: '', time: '', format: 'Education', structure: 'Tutorial' },
+                { emotion: 'Shock', subject: 'Bạn có biết', action: 'mật ong không bao giờ hết hạn sử dụng?', objective: 'Các nhà khảo cổ đã tìm thấy hũ mật ong 3000 năm tuổi', contrast: 'và nó vẫn ăn được', proof: 'sự thật khó tin', time: '', format: 'Education', structure: 'Breakdown' },
             ];
             
             const join = (...args) => args.filter(Boolean).join(' ');
@@ -437,4 +472,5 @@
     </script>
 </body>
 </html>
+
 
